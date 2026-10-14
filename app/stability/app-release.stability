@@ -84,7 +84,7 @@ private fun fi.sateenkaarikello.ui.challenge.TimerBar(runId: kotlin.Int, running
     - running: STABLE (primitive type)
 
 @Composable
-public fun fi.sateenkaarikello.ui.clock.ClockFace(command: fi.sateenkaarikello.ui.clock.ClockCommand, modifier: androidx.compose.ui.Modifier, period: kotlin.Int, step: kotlin.Int, interactive: kotlin.Boolean, help: kotlin.Boolean, mini: kotlin.Boolean, highlight: fi.sateenkaarikello.domain.Hand?, under: kotlin.collections.List<fi.sateenkaarikello.domain.Mark>, over: kotlin.collections.List<fi.sateenkaarikello.domain.Mark>, onChange: kotlin.Function1<kotlin.Int, kotlin.Unit>?, paintRingFrom: kotlin.Int?): kotlin.Unit
+public fun fi.sateenkaarikello.ui.clock.ClockFace(command: fi.sateenkaarikello.ui.clock.ClockCommand, modifier: androidx.compose.ui.Modifier, period: kotlin.Int, step: kotlin.Int, interactive: kotlin.Boolean, help: kotlin.Boolean, mini: kotlin.Boolean, highlight: fi.sateenkaarikello.domain.Hand?, under: kotlin.collections.List<fi.sateenkaarikello.domain.Mark>, over: kotlin.collections.List<fi.sateenkaarikello.domain.Mark>, onChange: kotlin.Function1<kotlin.Int, kotlin.Unit>?, paintRingFrom: kotlin.Int?, onSettle: kotlin.Function0<kotlin.Unit>?): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -100,6 +100,7 @@ public fun fi.sateenkaarikello.ui.clock.ClockFace(command: fi.sateenkaarikello.u
     - over: STABLE (stability configuration file type)
     - onChange: STABLE (function type)
     - paintRingFrom: STABLE (class with no mutable properties)
+    - onSettle: STABLE (function type)
 
 @Composable
 private fun fi.sateenkaarikello.ui.clock.highlightPulse(highlight: fi.sateenkaarikello.domain.Hand?, reduceMotion: kotlin.Boolean): kotlin.Float
@@ -603,13 +604,14 @@ private fun fi.sateenkaarikello.ui.home.ResetChip(onReset: kotlin.Function0<kotl
     - onReset: STABLE (function type)
 
 @Composable
-private fun fi.sateenkaarikello.ui.intro.IntroClock(command: fi.sateenkaarikello.ui.clock.ClockCommand, from: kotlin.Int, time: kotlin.Function0<kotlin.Long>, modifier: androidx.compose.ui.Modifier): kotlin.Unit
+private fun fi.sateenkaarikello.ui.intro.IntroClock(command: fi.sateenkaarikello.ui.clock.ClockCommand, from: kotlin.Int, time: kotlin.Function0<kotlin.Long>, onSettle: kotlin.Function0<kotlin.Unit>, modifier: androidx.compose.ui.Modifier): kotlin.Unit
   skippable: true
   restartable: true
   params:
     - command: STABLE (marked @Stable or @Immutable)
     - from: STABLE (primitive type)
     - time: STABLE (function type)
+    - onSettle: STABLE (function type)
     - modifier: STABLE (marked @Stable or @Immutable)
 
 @Composable
@@ -632,14 +634,13 @@ public fun fi.sateenkaarikello.ui.intro.IntroOverlay(outfit: fi.sateenkaarikello
     - modifier: STABLE (marked @Stable or @Immutable)
 
 @Composable
-private fun fi.sateenkaarikello.ui.intro.IntroTimelineEffect(reduceMotion: kotlin.Boolean, onFrame: kotlin.Function1<kotlin.Long, kotlin.Unit>, onSpin: kotlin.Function0<kotlin.Unit>, onTick: kotlin.Function0<kotlin.Unit>, onDone: kotlin.Function0<kotlin.Unit>): kotlin.Unit
+private fun fi.sateenkaarikello.ui.intro.IntroTimelineEffect(reduceMotion: kotlin.Boolean, onFrame: kotlin.Function1<kotlin.Long, kotlin.Unit>, onSpin: kotlin.Function0<kotlin.Unit>, onDone: kotlin.Function0<kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
     - reduceMotion: STABLE (primitive type)
     - onFrame: STABLE (function type)
     - onSpin: STABLE (function type)
-    - onTick: STABLE (function type)
     - onDone: STABLE (function type)
 
 @Composable

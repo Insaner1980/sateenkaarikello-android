@@ -56,6 +56,9 @@ class ClockState internal constructor(
     var reduceMotion = false
     var onChange: ((Int) -> Unit)? = null
 
+    /** Kutsutaan, kun animoitu siirto on kulkenut loppuun (ei, jos uusi käsky keskeyttää sen). */
+    var onSettle: (() -> Unit)? = null
+
     private var animation: Job? = null
 
     fun updatePeriod(p: Int) {
@@ -93,6 +96,7 @@ class ClockState internal constructor(
             scope.launch {
                 animate(0f, 1f, animationSpec = tween(duration, easing = WebEase)) { k, _ -> raw = from + delta * k }
                 raw = t.toFloat()
+                onSettle?.invoke()
             }
     }
 

@@ -1,6 +1,7 @@
 package fi.sateenkaarikello.ui.intro
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
@@ -52,7 +54,7 @@ import fi.sateenkaarikello.ui.intro.IntroTimeline as T
 /**
  * Aloitusnäkymä kotinäkymän päällä (aikajana: [IntroTimeline]). Kello pyörähtää laitteen
  * kellonaikaan, nukke [outfit]-asussa hyppii vilkuttaen, ja lopuksi näkymä häivytetään.
- * Napautus ohittaa. [onTick] soitetaan viisarien pysähtyessä ja [onDone] lopussa.
+ * Napautus ohittaa. [onTick] soitetaan, kun viisarien animaatio on oikeasti päättynyt, ja [onDone] lopussa.
  * Kun järjestelmän animaatiot on poistettu, valmis kuva näytetään hetken ilman liikettä.
  */
 @Composable
@@ -74,10 +76,6 @@ fun IntroOverlay(
         reduceMotion = reduceMotion,
         onFrame = { elapsed.longValue = it },
         onSpin = { command = ClockCommand(target, T.SPIN_MS, exact = true) },
-        onTick = {
-            onTick()
-            confetti?.sparkle(clockCenter.value)
-        },
         onDone = onDone,
     )
 
@@ -110,6 +108,10 @@ fun IntroOverlay(
                 command = command,
                 from = from,
                 time = time,
+                onSettle = {
+                    onTick()
+                    confetti?.sparkle(clockCenter.value)
+                },
                 modifier =
                     Modifier
                         .size(clockSize)
@@ -119,6 +121,15 @@ fun IntroOverlay(
         }
     }
 }
+
+/**
+ * Intron alle jäävä sisältö: kun [covered], se on piilossa saavutettavuuspalveluilta, eikä
+ * näppäimistön kohdistus pääse siihen. Muuten se toimii tavalliseen tapaan.
+ */
+fun Modifier.coveredByIntro(covered: Boolean): Modifier =
+    focusProperties { onEnter = { if (covered) cancelFocusChange() } }
+        .focusGroup()
+        .then(if (covered) Modifier.clearAndSetSemantics { } else Modifier)
 
 /** Koko näytön peittävä, läpinäkyvyydeltään [alpha] tausta; napautus ohittaa intron. */
 private fun Modifier.introSurface(
@@ -134,41 +145,44 @@ private fun Modifier.introSurface(
         .semantics { contentDescription = description }
         .safeDrawingPadding()
 
-/** Ajaa aikajanan; ruutu-, pyörähdys-, tik- ja lopetuskutsut käyttävät aina viimeisimpiä lambdoja. */
+/** Ajaa aikajanan; ruutu-, pyörähdys- ja lopetuskutsut käyttävät aina viimeisimpiä lambdoja. */
 @Composable
 private fun IntroTimelineEffect(
     reduceMotion: Boolean,
     onFrame: (Long) -> Unit,
     onSpin: () -> Unit,
-    onTick: () -> Unit,
     onDone: () -> Unit,
 ) {
     val currentOnFrame by rememberUpdatedState(onFrame)
     val currentOnSpin by rememberUpdatedState(onSpin)
-    val currentOnTick by rememberUpdatedState(onTick)
     val currentOnDone by rememberUpdatedState(onDone)
     LaunchedEffect(reduceMotion) {
         if (reduceMotion) {
             delay(T.STILL_MS)
         } else {
-            runTimeline(onFrame = { currentOnFrame(it) }, onSpin = { currentOnSpin() }, onTick = { currentOnTick() })
+            runTimeline(onFrame = { currentOnFrame(it) }, onSpin = { currentOnSpin() })
         }
         currentOnDone()
     }
 }
 
-/** Kello ponnahtaa esiin, ja minuuttiviisari maalaa sateenkaarirenkaan pyörähtäessään. */
+/**
+ * Kello ponnahtaa esiin, ja minuuttiviisari maalaa sateenkaarirenkaan pyörähtäessään.
+ * [onSettle] kutsutaan, kun pyörähdys päättyy.
+ */
 @Composable
 private fun IntroClock(
     command: ClockCommand,
     from: Int,
     time: () -> Long,
+    onSettle: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ClockFace(
         command = command,
         mini = true,
         paintRingFrom = from,
+        onSettle = onSettle,
         modifier =
             modifier.graphicsLayer {
                 val s = T.clockScale(time())
@@ -223,26 +237,20 @@ private fun IntroTitle(
     }
 }
 
-/** Ajaa aikajanan ruutu kerrallaan loppuun: viisarit lähtevät [onSpin]-hetkellä ja tik soi [onTick]-hetkellä. */
+/** Ajaa aikajanan ruutu kerrallaan loppuun; viisarit lähtevät [onSpin]-hetkellä. */
 private suspend fun runTimeline(
     onFrame: (Long) -> Unit,
     onSpin: () -> Unit,
-    onTick: () -> Unit,
 ) {
     val start = withFrameNanos { it }
     var elapsed = 0L
     var spun = false
-    var ticked = false
     while (elapsed < T.END_MS) {
         elapsed = withFrameNanos { (it - start) / NANOS_PER_MS }
         onFrame(elapsed)
         if (!spun && elapsed >= T.SPIN_START_MS) {
             spun = true
             onSpin()
-        }
-        if (!ticked && elapsed >= T.TICK_AT_MS) {
-            ticked = true
-            onTick()
         }
     }
 }

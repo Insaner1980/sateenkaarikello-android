@@ -34,6 +34,7 @@ import fi.sateenkaarikello.ui.game.ResultScreen
 import fi.sateenkaarikello.ui.home.HomeDestination
 import fi.sateenkaarikello.ui.home.HomeScreen
 import fi.sateenkaarikello.ui.intro.IntroOverlay
+import fi.sateenkaarikello.ui.intro.coveredByIntro
 import fi.sateenkaarikello.ui.lesson.LessonListScreen
 import fi.sateenkaarikello.ui.lesson.LessonRoute
 import fi.sateenkaarikello.ui.levels.LevelsScreen
@@ -58,6 +59,8 @@ fun SateenkaariApp(
             val speech by app.speechAvailable.collectAsStateWithLifecycle()
             CompositionLocalProvider(LocalAppViewModel provides app) {
                 ConfettiHost {
+                    // Aloitusnäkymä jokaisella käynnistyksellä; ei palaa näkyviin, kun näkymä luodaan uudelleen.
+                    var introDone by rememberSaveable { mutableStateOf(false) }
                     val backStack = rememberNavBackStack(ScreenSavedState, Screen.Home)
                     val nav = remember(backStack) { Navigator(backStack) }
                     val go = { screen: Screen ->
@@ -74,6 +77,7 @@ fun SateenkaariApp(
                     }
                     NavDisplay(
                         backStack = backStack,
+                        modifier = Modifier.coveredByIntro(!introDone),
                         onBack = { nav.pop() },
                         entryDecorators =
                             listOf(
@@ -150,8 +154,6 @@ fun SateenkaariApp(
                                 entry<Screen.Challenge> { ChallengeRoute(s.h24, s.help, back) }
                             },
                     )
-                    // Aloitusnäkymä jokaisella käynnistyksellä; ei palaa näkyviin, kun näkymä luodaan uudelleen.
-                    var introDone by rememberSaveable { mutableStateOf(false) }
                     if (!introDone) {
                         IntroOverlay(p.outfit, onTick = { app.play(Sound.TICK) }, onDone = { introDone = true })
                     }

@@ -67,6 +67,7 @@ import fi.sateenkaarikello.ui.clock.ClockSpec as S
  * @param mini pieni koristekello ilman apua ja 24 h -osia
  * @param onChange kutsutaan, kun käyttäjä muuttaa aikaa (raahaus tai saavutettavuustoiminto)
  * @param paintRingFrom aloitusnäkymä: sateenkaarirengas maalautuu minuuttiviisarin perässä tästä ajasta alkaen
+ * @param onSettle kutsutaan, kun animoitu siirto on kulkenut loppuun
  */
 @Composable
 fun ClockFace(
@@ -82,6 +83,7 @@ fun ClockFace(
     over: List<Mark> = emptyList(),
     onChange: ((Int) -> Unit)? = null,
     paintRingFrom: Int? = null,
+    onSettle: (() -> Unit)? = null,
 ) {
     val scope = rememberCoroutineScope()
     val state = remember { ClockState(command.time, period, scope) }
@@ -90,6 +92,7 @@ fun ClockFace(
         state.step = step
         state.reduceMotion = reduceMotion
         state.onChange = onChange
+        state.onSettle = onSettle
     }
     LaunchedEffect(period) { state.updatePeriod(period) }
     LaunchedEffect(command) { state.apply(command) }

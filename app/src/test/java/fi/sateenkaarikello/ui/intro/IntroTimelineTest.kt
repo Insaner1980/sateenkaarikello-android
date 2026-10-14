@@ -32,9 +32,8 @@ class IntroTimelineTest {
     }
 
     @Test
-    fun `the tick comes when the hands stop`() {
-        assertEquals(T.SPIN_START_MS + T.SPIN_MS, T.TICK_AT_MS)
-        assertTrue(T.TICK_AT_MS < T.FADE_START_MS)
+    fun `hands stop well before the fade`() {
+        assertTrue(T.SPIN_START_MS + T.SPIN_MS < T.FADE_START_MS)
     }
 
     @Test

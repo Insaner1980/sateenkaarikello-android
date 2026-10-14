@@ -16,7 +16,6 @@ object IntroTimeline {
     const val CLOCK_FADE_MS = 150L
     const val SPIN_START_MS = 300L
     const val SPIN_MS = 1000
-    const val TICK_AT_MS = SPIN_START_MS + SPIN_MS
     const val DOLL_IN_START_MS = 1100L
     const val DOLL_IN_MS = 350L
     const val DOLL_FADE_MS = 120L
@@ -44,25 +43,31 @@ object IntroTimeline {
     fun spinFrom(target: Int): Int =
         ClockTime.mod(target - ClockTime.MINUTES_PER_HOUR - target % ClockTime.MINUTES_PER_HOUR, ClockTime.DAY)
 
+    /** Kellon koko: pienestä täyteen pienellä yli-joustolla. */
     fun clockScale(t: Long): Float = lerp(CLOCK_START_SCALE, 1f, easeOutBack(progress(t, 0L, CLOCK_IN_MS)))
 
+    /** Kellon näkyvyys alussa. */
     fun clockAlpha(t: Long): Float = progress(t, 0L, CLOCK_FADE_MS)
 
     /** Nuken pystysiirtymä suhteessa nuken korkeuteen: alussa alempana, lopussa 0. */
     fun dollDrop(t: Long): Float = (1f - easeOutBack(progress(t, DOLL_IN_START_MS, DOLL_IN_MS))) * DOLL_RISE
 
+    /** Nuken näkyvyys sen noustessa esiin. */
     fun dollAlpha(t: Long): Float = progress(t, DOLL_IN_START_MS, DOLL_FADE_MS)
 
+    /** Otsikon kirjaimen [index] koko: kirjaimet pomppaavat esiin vuorotellen. */
     fun letterScale(
         t: Long,
         index: Int,
     ): Float = easeOutBack(progress(t, letterStart(index), LETTER_MS))
 
+    /** Otsikon kirjaimen [index] näkyvyys. */
     fun letterAlpha(
         t: Long,
         index: Int,
     ): Float = progress(t, letterStart(index), LETTER_FADE_MS)
 
+    /** Tervehdyksen näkyvyys. */
     fun greetingAlpha(t: Long): Float = progress(t, GREETING_START_MS, GREETING_MS)
 
     /** Ensin häipyy sisältö taustan päällä, jotta intro ja kotinäkymä eivät näy päällekkäin. */

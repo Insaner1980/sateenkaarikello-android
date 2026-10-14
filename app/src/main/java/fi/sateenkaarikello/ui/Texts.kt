@@ -149,6 +149,7 @@ fun levelName(index: Int): Int =
         else -> R.string.level_minuutit
     }
 
+/** Aloitusnäkymän tervehdyksen teksti. */
 @StringRes
 fun greetingText(greeting: Greeting): Int =
     when (greeting) {
