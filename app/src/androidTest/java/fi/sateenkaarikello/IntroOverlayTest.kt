@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import fi.sateenkaarikello.domain.Outfit
 import fi.sateenkaarikello.ui.intro.IntroOverlay
+import fi.sateenkaarikello.ui.intro.IntroTimeline
 import fi.sateenkaarikello.ui.intro.coveredByIntro
 import fi.sateenkaarikello.ui.isReduceMotion
 import fi.sateenkaarikello.ui.theme.SateenkaariTheme
@@ -33,13 +34,20 @@ class IntroOverlayTest {
         assumeFalse(isReduceMotion(InstrumentationRegistry.getInstrumentation().targetContext))
         var ticks = 0
         var ticksAtDone = -1
+        compose.mainClock.autoAdvance = false
         compose.setContent {
             SateenkaariTheme {
                 IntroOverlay(Outfit.Default, onTick = { ticks++ }, onDone = { ticksAtDone = ticks })
             }
         }
-        compose.waitUntil(10_000) { ticksAtDone >= 0 }
-        assertEquals(1, ticksAtDone)
+        // Kesken pyörähdyksen tik ei ole vielä soinut.
+        compose.mainClock.advanceTimeBy(IntroTimeline.SPIN_START_MS + IntroTimeline.SPIN_MS / 2)
+        compose.runOnIdle { assertEquals(0, ticks) }
+        // Pyörähdyksen jälkeen tik on soinut kerran.
+        compose.mainClock.advanceTimeBy(IntroTimeline.SPIN_MS.toLong())
+        compose.runOnIdle { assertEquals(1, ticks) }
+        compose.mainClock.advanceTimeBy(IntroTimeline.END_MS)
+        compose.runOnIdle { assertEquals(1, ticksAtDone) }
     }
 
     @Test
