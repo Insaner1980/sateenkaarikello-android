@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "exceptionsFile": "config/check-exceptions.json",
+  "projectId": "sateenkaarikello-android",
+  "modules": [
+    {
+      "path": ":app",
+      "relativePath": "app",
+      "kind": "android-application",
+      "required": true,
+      "variants": ["debug", "release"],
+      "sourceSets": ["main", "test", "androidTest"]
+    }
+  ],
+  "buildTasks": [":app:assembleDebug"],
+  "testTasks": [":app:testDebugUnitTest"],
+  "deviceTestTasks": [":app:connectedDebugAndroidTest"],
+  "includedBuilds": [],
+  "checks": {
+    "ktlintTasks": [":app:ktlintCheck"],
+    "detektTasks": [":app:detekt"],
+    "lintTasks": [":app:lintDebug"],
+    "fullLintTasks": [":app:lintDebug", ":app:lintRelease"],
+    "stabilityTasks": [":app:stabilityCheck"],
+    "dependencyCheckTasks": [":app:dependencyCheckAnalyze"],
+    "dependencyConfigurations": ["debugRuntimeClasspath", "releaseRuntimeClasspath"],
+    "semgrepConfig": "config/semgrep/sateenkaarikello-security.yml"
+  }
+}

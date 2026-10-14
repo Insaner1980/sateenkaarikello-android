@@ -1,0 +1,10 @@
+# Required by the shared Android-check manifest; lint-check does not run Semgrep.
+rules:
+  - id: sateenkaarikello-android-cleartext-traffic-enabled
+    message: Cleartext traffic must not be enabled globally.
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - app/src/main/AndroidManifest.xml
+    pattern-regex: 'usesCleartextTraffic\s*=\s*"true"'

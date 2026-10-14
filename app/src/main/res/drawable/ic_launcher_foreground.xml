@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Käynnistyskuvake: sateenkaarirengas, kellotaulu ja viisarit (sama kuin web-version kello). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:pathData="M46.49,25.99A29,29 0 0,1 61.51,25.99" android:strokeColor="#FF6B6B" android:strokeWidth="5.5"/>
+    <path android:pathData="M61.51,25.99A29,29 0 0,1 74.51,33.49" android:strokeColor="#FF922B" android:strokeWidth="5.5"/>
+    <path android:pathData="M74.51,33.49A29,29 0 0,1 82.01,46.49" android:strokeColor="#FCC419" android:strokeWidth="5.5"/>
+    <path android:pathData="M82.01,46.49A29,29 0 0,1 82.01,61.51" android:strokeColor="#94D82D" android:strokeWidth="5.5"/>
+    <path android:pathData="M82.01,61.51A29,29 0 0,1 74.51,74.51" android:strokeColor="#51CF66" android:strokeWidth="5.5"/>
+    <path android:pathData="M74.51,74.51A29,29 0 0,1 61.51,82.01" android:strokeColor="#20C997" android:strokeWidth="5.5"/>
+    <path android:pathData="M61.51,82.01A29,29 0 0,1 46.49,82.01" android:strokeColor="#22B8CF" android:strokeWidth="5.5"/>
+    <path android:pathData="M46.49,82.01A29,29 0 0,1 33.49,74.51" android:strokeColor="#339AF0" android:strokeWidth="5.5"/>
+    <path android:pathData="M33.49,74.51A29,29 0 0,1 25.99,61.51" android:strokeColor="#5C7CFA" android:strokeWidth="5.5"/>
+    <path android:pathData="M25.99,61.51A29,29 0 0,1 25.99,46.49" android:strokeColor="#845EF7" android:strokeWidth="5.5"/>
+    <path android:pathData="M25.99,46.49A29,29 0 0,1 33.49,33.49" android:strokeColor="#CC5DE8" android:strokeWidth="5.5"/>
+    <path android:pathData="M33.49,33.49A29,29 0 0,1 46.49,25.99" android:strokeColor="#F06595" android:strokeWidth="5.5"/>
+    <path android:pathData="M54,54m-26,0a26,26 0 1,0 52,0a26,26 0 1,0 -52,0" android:fillColor="#FFFFFF"/>
+    <path android:pathData="M54.00,35.00L54.00,31.00" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M63.50,37.55L65.50,34.08" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M70.45,44.50L73.92,42.50" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M73.00,54.00L77.00,54.00" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M70.45,63.50L73.92,65.50" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M63.50,70.45L65.50,73.92" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M54.00,73.00L54.00,77.00" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M44.50,70.45L42.50,73.92" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M37.55,63.50L34.08,65.50" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M35.00,54.00L31.00,54.00" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M37.55,44.50L34.08,42.50" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M44.50,37.55L42.50,34.08" android:strokeColor="#3A2453" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <path android:pathData="M54,54L44.17,47.12" android:strokeColor="#E64980" android:strokeWidth="4.5" android:strokeLineCap="round"/>
+    <path android:pathData="M54,54L69.59,45.00" android:strokeColor="#228BE6" android:strokeWidth="3" android:strokeLineCap="round"/>
+    <path android:pathData="M54,54m-3.2,0a3.2,3.2 0 1,0 6.4,0a3.2,3.2 0 1,0 -6.4,0" android:fillColor="#3A2453"/>
+</vector>

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "exceptions": [
+    {
+      "id": "sateenkaarikello-mobsf-target-sdk",
+      "tool": "mobsfscan",
+      "rule": "android_task_hijacking2",
+      "scope": "app/src/main/AndroidManifest.xml targetSdk inference",
+      "reason": "MobSF 0.4.5 reads uses-sdk only from the source manifest and defaults to API 26 when it is absent. Gradle sets targetSdk = 37, also confirmed in the existing debug and release merged manifests. Re-evaluate when the target SDK or scanner changes.",
+      "owner": "project-maintainers",
+      "added": "2026-10-13",
+      "expires": "2027-01-13",
+      "tracking": "local-review:sateenkaarikello-mobsf-target-sdk",
+      "sourcePath": "app/build.gradle.kts",
+      "selector": "targetSdk = 37",
+      "findingPath": "app/src/main/AndroidManifest.xml",
+      "findingSelectors": [
+        "Activity exported, targetSdk<29 and launchMode != singleInstance or taskAffinity is not empty"
+      ]
+    }
+  ]
+}

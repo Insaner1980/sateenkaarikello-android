@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress until="2027-01-13Z">
+        <notes><![CDATA[
+        Reviewed 2026-10-13: Dependency-Check incorrectly maps this Jetpack Compose
+        runtime library to cpe:2.3:a:github:github:0.15.0:*:*:*:*:*:*:*.
+        These four CVEs affect GitHub Enterprise Server (Pages command execution,
+        private repository name disclosure, and public-key mass assignment).
+        The Android library contains none of those server components.
+        Limited to the reviewed package version and CVEs; re-evaluate on upgrade.
+        https://github.com/skydoves/compose-stability-analyzer
+        https://docs.github.com/en/enterprise-server@2.21/admin/release-notes
+        https://github.com/blog/1068-public-key-security-vulnerability-and-mitigation
+        ]]></notes>
+        <packageUrl>pkg:maven/com.github.skydoves/compose-stability-runtime-android@0.15.0</packageUrl>
+        <cve>CVE-2012-2055</cve>
+        <cve>CVE-2020-10517</cve>
+        <cve>CVE-2020-10518</cve>
+        <cve>CVE-2020-10519</cve>
+    </suppress>
+</suppressions>

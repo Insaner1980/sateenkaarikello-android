@@ -1,0 +1,5 @@
+overrides:
+  '@openai/codex': 0.161.0
+
+patchedDependencies:
+  deepsec@2.3.9: patches/deepsec@2.3.9.patch

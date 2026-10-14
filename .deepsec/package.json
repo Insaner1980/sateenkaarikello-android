@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deepsec:scan": "deepsec scan --project-id sateenkaarikello-android",
+    "deepsec:process": "deepsec process --project-id sateenkaarikello-android --agent codex --model gpt-6.1-sol --thinking-level medium",
+    "deepsec:revalidate": "deepsec revalidate --project-id sateenkaarikello-android --agent codex --model gpt-6.1-sol --thinking-level medium --min-severity MEDIUM",
+    "deepsec:export": "deepsec export --project-id sateenkaarikello-android --format md-dir --out ./findings",
+    "deepsec:report": "pnpm run deepsec:scan && pnpm run deepsec:process && pnpm run deepsec:export",
+    "deepsec:report:custom": "pnpm run deepsec:report"
+  },
+  "dependencies": {
+    "deepsec": "2.3.9"
+  }
+}

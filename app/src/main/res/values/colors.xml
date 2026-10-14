@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Vain ikkunan ja kuvakkeen värit. Compose-värit ovat ui/theme/Color.kt:ssä. -->
+<resources>
+    <color name="window_background">#FFF5FA</color>
+    <color name="icon_background">#FFF5FA</color>
+</resources>

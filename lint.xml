@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Keep the toolchain selected in CLAUDE.md. KGP 2.4.21 is fully supported up to
+         Gradle 9.7.0 and AGP 9.3.1; this project uses the AGP 9.3 patch line.
+         https://kotlinlang.org/docs/gradle-configure-project.html
+         Match only the reviewed upgrade suggestions, so new suggestions remain visible. -->
+    <issue id="AndroidGradlePluginVersion">
+        <ignore regexp="^A newer version of Gradle than 9\.7\.0 is available: 9\.8\.1$" />
+        <ignore regexp="^A newer version of com\.android\.application than 9\.3\.3 is available: 9\.4\.1$" />
+    </issue>
+    <!-- Compose Rules 0.4.23 supports Detekt 1.23.8; newer rules require Detekt 2.
+         Revisit when migrating Detekt. https://mrmans0n.github.io/compose-rules/detekt/ -->
+    <issue id="NewerVersionAvailable">
+        <ignore regexp="^A newer version of io\.nlopez\.compose\.rules:detekt than 0\.4\.23 is available: 0\.6\.8$" />
+    </issue>
+</lint>
