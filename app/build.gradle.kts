@@ -138,9 +138,7 @@ composeCompiler {
 }
 
 composeStabilityAnalyzer {
-    stabilityValidation {
-        stabilityConfigurationFiles.add(composeStabilityConfig)
-    }
+    stabilityConfigurationFiles.add(composeStabilityConfig)
 }
 
 dependencies {

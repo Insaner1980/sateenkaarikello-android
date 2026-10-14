@@ -4,3 +4,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Juuri julkaistua versiota ei ehdoteta heti: viikon odotus suojaa vaarallisilta ja keskeneräisiltä julkaisuilta.
+    cooldown:
+      default-days: 7
+    ignore:
+      # compose-rules 0.5+ vaatii detekt 2.0:n (alfa). Projektissa on detekt 1.23.x,
+      # joten detekt-säännöt pidetään 0.4.x-linjalla, kunnes detekt 2 on vakaa.
+      - dependency-name: "io.nlopez.compose.rules:detekt"
+        versions: [">= 0.5.0"]

@@ -8,7 +8,7 @@ Natiivi Android-sovellus (Kotlin, Jetpack Compose, ei WebViewiä), joka opettaa 
 
 ## Versiot
 
-`gradle/libs.versions.toml`: AGP 9.3.3, Gradle 9.7.0, Kotlin (KGP + Compose-kääntäjä + serialization) 2.4.21, Compose BOM 2026.09.00 (UI 1.12.1, Material3 1.4.0), Navigation 3 1.2.0, Lifecycle 2.11.0, DataStore 1.2.1, espresso-core 3.7.0 (vanhempi ei toimi API 37:llä). AGP 9:n sisäänrakennettu Kotlin; uudempi KGP on juuren `buildscript`-classpathissa. AGP on 9.3 eikä 9.4, koska KGP 2.4.21 on testattu AGP 9.3.1:een asti.
+`gradle/libs.versions.toml`: AGP 9.4.1, Gradle 9.8.1 (jakelun SHA-256 kiinnitetty wrapperiin), Kotlin (KGP + Compose-kääntäjä + serialization) 2.4.21, Compose BOM 2026.09.00 (UI 1.12.1, Material3 1.4.0), Navigation 3 1.2.0, Lifecycle 2.11.0, DataStore 1.2.1, espresso-core 3.7.0 (vanhempi ei toimi API 37:llä). AGP 9:n sisäänrakennettu Kotlin; uudempi KGP on juuren `buildscript`-classpathissa. KGP 2.4.21 on virallisesti testattu AGP 9.3.1:een ja Gradle 9.7.0:aan asti. AGP 9.4.1 ja Gradle 9.8.1 on varmennettu tässä projektissa (build, R8-release, yksikkö- ja UI-testit API 26:lla ja 37:llä, 2026-10-14). Dependabot: viikon viive uusille julkaisuille, ja compose-rules-detekt pidetään 0.4.x:ssä, koska 0.5+ vaatii detekt 2:n.
 
 ## Rakenne (`app/src/main/java/fi/sateenkaarikello`)
 
