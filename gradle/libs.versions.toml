@@ -19,7 +19,7 @@ ktlint = "1.8.0"
 detekt = "1.23.8"
 owaspDependencyCheck = "13.0.0"
 composeStabilityAnalyzer = "0.15.0"
-composeRulesDetekt = "0.4.23"
+composeRulesDetekt = "0.6.8"
 composeRulesKtlint = "0.6.8"
 sonarqube = "7.5.0.8588"
 
