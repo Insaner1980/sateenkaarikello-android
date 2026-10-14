@@ -50,6 +50,14 @@
     <string name="clock_zone_yli">yli</string>
     <string name="clock_zone_vaille">vaille</string>
 
+    <!-- Aloitusnäkymä -->
+    <string name="intro_greeting_morning">Hyvää huomenta!</string>
+    <string name="intro_greeting_day">Hyvää päivää!</string>
+    <string name="intro_greeting_evening">Hyvää iltaa!</string>
+    <string name="intro_greeting_night">Hei, yökyöpeli!</string>
+    <string name="intro_description">%1$s. %2$s</string>
+    <string name="intro_skip">Ohita alku</string>
+
     <!-- Koti -->
     <string name="tagline">Opitaan lukemaan kelloa leikkien</string>
     <string name="now_eyebrow">Nyt kello on</string>

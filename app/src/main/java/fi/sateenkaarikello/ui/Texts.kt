@@ -10,6 +10,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalResources
 import fi.sateenkaarikello.R
 import fi.sateenkaarikello.domain.FinnishTime
+import fi.sateenkaarikello.domain.Greeting
 import fi.sateenkaarikello.domain.Hint
 import fi.sateenkaarikello.domain.HourPosition
 import fi.sateenkaarikello.domain.MinutePosition
@@ -146,6 +147,15 @@ fun levelName(index: Int): Int =
         2 -> R.string.level_vartit
         FIVE_MINUTE_LEVEL -> R.string.level_viisi
         else -> R.string.level_minuutit
+    }
+
+@StringRes
+fun greetingText(greeting: Greeting): Int =
+    when (greeting) {
+        Greeting.MORNING -> R.string.intro_greeting_morning
+        Greeting.DAY -> R.string.intro_greeting_day
+        Greeting.EVENING -> R.string.intro_greeting_evening
+        Greeting.NIGHT -> R.string.intro_greeting_night
     }
 
 @StringRes

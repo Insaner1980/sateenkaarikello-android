@@ -1,5 +1,6 @@
 package fi.sateenkaarikello.domain
 
+import java.time.LocalTime
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -46,6 +47,12 @@ object ClockTime {
     ): Float = ((a % n) + n) % n
 
     fun period(h24: Boolean): Int = if (h24) DAY else HALF_DAY
+
+    /** Kellonaika minuutteina keskiyöstä. */
+    fun minutesOf(time: LocalTime): Int = time.hour * MINUTES_PER_HOUR + time.minute
+
+    /** Laitteen kellonaika minuutteina keskiyöstä. */
+    fun now(): Int = minutesOf(LocalTime.now())
 
     /** Pyöristää tason tarkkuuteen (JavaScriptin Math.round) ja kiertää jakson ympäri. */
     fun snap(

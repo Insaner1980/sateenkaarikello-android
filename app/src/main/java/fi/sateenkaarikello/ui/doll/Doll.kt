@@ -74,11 +74,12 @@ private inline fun DrawScope.posed(
     }
 }
 
+/** Rajaa vaatekaapin osakuviin; koko nukkea ei rajata, jotta vilkuttava käsi ei katkea reunaan. */
 private inline fun DrawScope.clipRect(
     r: Rect,
     block: DrawScope.() -> Unit,
 ) {
-    clipPath(Path().apply { addRect(r) }, block = block)
+    if (r == DollParts.Full) block() else clipPath(Path().apply { addRect(r) }, block = block)
 }
 
 private sealed interface Fill {

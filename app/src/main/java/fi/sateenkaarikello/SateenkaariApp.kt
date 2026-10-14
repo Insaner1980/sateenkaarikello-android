@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,6 +33,7 @@ import fi.sateenkaarikello.ui.game.GameRoute
 import fi.sateenkaarikello.ui.game.ResultScreen
 import fi.sateenkaarikello.ui.home.HomeDestination
 import fi.sateenkaarikello.ui.home.HomeScreen
+import fi.sateenkaarikello.ui.intro.IntroOverlay
 import fi.sateenkaarikello.ui.lesson.LessonListScreen
 import fi.sateenkaarikello.ui.lesson.LessonRoute
 import fi.sateenkaarikello.ui.levels.LevelsScreen
@@ -146,6 +150,11 @@ fun SateenkaariApp(
                                 entry<Screen.Challenge> { ChallengeRoute(s.h24, s.help, back) }
                             },
                     )
+                    // Aloitusnäkymä jokaisella käynnistyksellä; ei palaa näkyviin, kun näkymä luodaan uudelleen.
+                    var introDone by rememberSaveable { mutableStateOf(false) }
+                    if (!introDone) {
+                        IntroOverlay(p.outfit, onTick = { app.play(Sound.TICK) }, onDone = { introDone = true })
+                    }
                 }
             }
         }

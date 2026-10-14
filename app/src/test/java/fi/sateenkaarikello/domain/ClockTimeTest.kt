@@ -5,6 +5,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.LocalTime
 
 class ClockTimeTest {
     private val eps = 0.001f
@@ -136,5 +137,12 @@ class ClockTimeTest {
         assertEquals(200, ClockTime.animationMillis(delta = 10f, ms = 700, exact = false))
         assertEquals(700, ClockTime.animationMillis(delta = 300f, ms = 700, exact = false))
         assertEquals(450, ClockTime.animationMillis(delta = -150f, ms = 700, exact = false))
+    }
+
+    @Test
+    fun `minutes of a local time count from midnight`() {
+        assertEquals(0, ClockTime.minutesOf(LocalTime.MIDNIGHT))
+        assertEquals(15 * 60 + 30, ClockTime.minutesOf(LocalTime.of(15, 30, 59)))
+        assertEquals(ClockTime.DAY - 1, ClockTime.minutesOf(LocalTime.MAX))
     }
 }

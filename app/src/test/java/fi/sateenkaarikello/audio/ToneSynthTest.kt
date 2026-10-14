@@ -12,6 +12,7 @@ class ToneSynthTest {
         assertEquals(listOf(330.0, 262.0), ToneSynth.tones(Sound.BAD).map { it.freq })
         assertEquals(listOf(523.0, 659.0, 784.0, 1047.0, 1319.0), ToneSynth.tones(Sound.WIN).map { it.freq })
         assertEquals(listOf(880.0), ToneSynth.tones(Sound.POP).map { it.freq })
+        assertEquals(listOf(1760.0, 1320.0), ToneSynth.tones(Sound.TICK).map { it.freq })
     }
 
     @Test

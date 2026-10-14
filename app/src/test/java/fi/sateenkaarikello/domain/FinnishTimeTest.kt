@@ -118,4 +118,17 @@ class FinnishTimeTest {
         assertEquals("Äiti", "äiti".capitalizeFirst())
         assertEquals("", "".capitalizeFirst())
     }
+
+    @Test
+    fun `greeting follows the day parts`() {
+        assertEquals(Greeting.NIGHT, FinnishTime.greeting(0))
+        assertEquals(Greeting.NIGHT, FinnishTime.greeting(4 * 60 + 59))
+        assertEquals(Greeting.MORNING, FinnishTime.greeting(5 * 60))
+        assertEquals(Greeting.MORNING, FinnishTime.greeting(9 * 60 + 59))
+        assertEquals(Greeting.DAY, FinnishTime.greeting(10 * 60))
+        assertEquals(Greeting.DAY, FinnishTime.greeting(17 * 60 + 59))
+        assertEquals(Greeting.EVENING, FinnishTime.greeting(18 * 60))
+        assertEquals(Greeting.EVENING, FinnishTime.greeting(21 * 60 + 59))
+        assertEquals(Greeting.NIGHT, FinnishTime.greeting(22 * 60))
+    }
 }

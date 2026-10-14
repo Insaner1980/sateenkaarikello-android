@@ -60,7 +60,6 @@ import fi.sateenkaarikello.ui.theme.SkDimens
 import fi.sateenkaarikello.ui.theme.SkType
 import fi.sateenkaarikello.ui.timeLabel
 import kotlinx.coroutines.delay
-import java.time.LocalTime
 
 @Composable
 fun HomeScreen(
@@ -125,7 +124,7 @@ private fun Hero() {
                     i,
                     c,
                     ->
-                    withStyle(SpanStyle(color = SkColors.Logo[i % SkColors.Logo.size])) { append(c) }
+                    withStyle(SpanStyle(color = SkColors.logoColor(i))) { append(c) }
                 }
             },
             style = SkType.Logo,
@@ -143,11 +142,11 @@ private fun Hero() {
 /** Oikean ajan kello, päivittyy 10 sekunnin välein (web: tickNow). */
 @Composable
 private fun NowCard(h24: Boolean) {
-    var now by remember { mutableIntStateOf(nowMinutes()) }
+    var now by remember { mutableIntStateOf(ClockTime.now()) }
     LaunchedEffect(Unit) {
         while (true) {
             delay(NOW_TICK_MS)
-            now = nowMinutes()
+            now = ClockTime.now()
         }
     }
     val t = if (h24) now else now % ClockTime.HALF_DAY
@@ -164,8 +163,6 @@ private fun NowCard(h24: Boolean) {
         }
     }
 }
-
-private fun nowMinutes(): Int = LocalTime.now().let { it.hour * ClockTime.MINUTES_PER_HOUR + it.minute }
 
 @Composable
 private fun DollCard(

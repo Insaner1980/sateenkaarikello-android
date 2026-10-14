@@ -66,6 +66,7 @@ import fi.sateenkaarikello.ui.clock.ClockSpec as S
  * @param help yli- ja vaille-puoliskot, minuuttiluvut ja 24 h -tilassa sisäkehän luvut
  * @param mini pieni koristekello ilman apua ja 24 h -osia
  * @param onChange kutsutaan, kun käyttäjä muuttaa aikaa (raahaus tai saavutettavuustoiminto)
+ * @param paintRingFrom aloitusnäkymä: sateenkaarirengas maalautuu minuuttiviisarin perässä tästä ajasta alkaen
  */
 @Composable
 fun ClockFace(
@@ -80,6 +81,7 @@ fun ClockFace(
     under: List<Mark> = emptyList(),
     over: List<Mark> = emptyList(),
     onChange: ((Int) -> Unit)? = null,
+    paintRingFrom: Int? = null,
 ) {
     val scope = rememberCoroutineScope()
     val state = remember { ClockState(command.time, period, scope) }
@@ -124,7 +126,7 @@ fun ClockFace(
             scale(scale, scale, pivot = Offset.Zero)
             translate(-origin, -origin)
         }) {
-            drawRing()
+            drawRing(paintRingFrom?.let { S.ringReveal(state.raw, it, state.period) } ?: ClockTime.FULL_TURN)
             drawCircle(SkColors.Face, S.FACE_RADIUS, Offset(S.CENTER, S.CENTER))
             if (help && !mini) drawHelp(textMeasurer, styles, is24, zoneLabels)
             under.forEach { drawMark(it, textMeasurer, styles) }
@@ -183,18 +185,29 @@ private fun DrawScope.drawOnBaseline(
     drawText(layout, topLeft = Offset(x - layout.size.width / 2f, baselineY - layout.firstBaseline))
 }
 
-private fun DrawScope.drawRing() {
+/** Sateenkaarirengas; [revealDeg] alle täyden kierroksen piirtää maalaamattoman osan vaaleana. */
+private fun DrawScope.drawRing(revealDeg: Float) {
     val r = S.RING_RADIUS
-    for (i in 0 until ClockTime.HOURS_PER_HALF_DAY) {
+    val arc = { color: Color, from: Float, sweep: Float ->
         drawArc(
-            color = SkColors.Rainbow[i],
-            startAngle = i * 30f - 15f - 90f,
-            sweepAngle = 30f,
+            color = color,
+            startAngle = from - ClockTime.FULL_TURN / 4,
+            sweepAngle = sweep,
             useCenter = false,
             topLeft = Offset(S.CENTER - r, S.CENTER - r),
             size = Size(2 * r, 2 * r),
             style = Stroke(S.RING_WIDTH),
         )
+    }
+    if (revealDeg >= ClockTime.FULL_TURN) {
+        for (i in 0 until ClockTime.HOURS_PER_HALF_DAY) {
+            arc(SkColors.Rainbow[i], i * S.RING_PART_DEG - S.RING_PART_DEG / 2, S.RING_PART_DEG)
+        }
+        return
+    }
+    arc(SkColors.Line, 0f, ClockTime.FULL_TURN)
+    for (i in 0 until ClockTime.HOURS_PER_HALF_DAY) {
+        for ((from, sweep) in S.ringPieces(i, revealDeg)) arc(SkColors.Rainbow[i], from, sweep)
     }
 }
 
