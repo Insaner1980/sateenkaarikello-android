@@ -75,6 +75,9 @@ object SkColors {
             Color(0xFFC2255C),
         )
 
+    /** Otsikon kirjaimen [index] väri: värit kiertävät järjestyksessä. */
+    fun logoColor(index: Int): Color = Logo[index % Logo.size]
+
     // Valikkonapit: täyttö ja tummempi varjo
     val KouluFill = Color(0xFFFFE8A3)
     val KouluShadow = Color(0xFFFCC419)

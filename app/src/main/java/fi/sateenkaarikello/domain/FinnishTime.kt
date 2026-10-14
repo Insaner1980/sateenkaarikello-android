@@ -1,5 +1,8 @@
 package fi.sateenkaarikello.domain
 
+/** Aloitusnäkymän tervehdys; tekstit ovat strings.xml:ssä. */
+enum class Greeting { MORNING, DAY, EVENING, NIGHT }
+
 /** Vuorokaudenaika: nimi ("iltapäivä"), adverbi ("iltapäivällä") ja näytetäänkö aurinko. */
 data class DayPart(
     val name: String,
@@ -119,6 +122,17 @@ object FinnishTime {
                 else -> numWord(m)
             }
         return "${numWord(h)} $minutes"
+    }
+
+    /** Tervehdys vuorokaudenajan mukaan (samat rajat kuin [dayPart]). */
+    fun greeting(total: Int): Greeting {
+        val h = ClockTime.mod(total, ClockTime.DAY) / ClockTime.MINUTES_PER_HOUR
+        return when {
+            h < MORNING_FROM || h >= NIGHT_FROM -> Greeting.NIGHT
+            h < LATE_MORNING_FROM -> Greeting.MORNING
+            h < EVENING_FROM -> Greeting.DAY
+            else -> Greeting.EVENING
+        }
     }
 
     /** Sanat ja 24 h -tilassa vuorokaudenaika, esim. "puoli neljä iltapäivällä". */

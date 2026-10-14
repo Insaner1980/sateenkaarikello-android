@@ -2,9 +2,12 @@ package fi.sateenkaarikello.ui.clock
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import fi.sateenkaarikello.domain.ClockTime
 import fi.sateenkaarikello.domain.MarkColor
 import fi.sateenkaarikello.ui.theme.SkColors
 import kotlin.math.cos
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sin
 
 /**
@@ -80,6 +83,39 @@ internal object ClockSpec {
 
     /** Dragging: kosketuksen täytyy olla vähintään tämän verran keskeltä liikkeen aikana. */
     const val DRAG_MIN_RADIUS = 8f
+
+    /** Renkaan yhden värin kaari: 30° tunnin kohdalla keskitettynä. */
+    const val RING_PART_DEG = 30f
+
+    /**
+     * Kuinka paljon renkaasta on maalattu, kun minuuttiviisari on kulkenut ajasta [from] aikaan [raw]:
+     * 0° alussa ja koko kierros tunnin jälkeen. Kulku lasketaan jakson [period] ympäri.
+     */
+    fun ringReveal(
+        raw: Float,
+        from: Int,
+        period: Int,
+    ): Float {
+        val minutes = ClockTime.mod(raw - from, period.toFloat())
+        return (minutes / ClockTime.MINUTES_PER_HOUR).coerceIn(0f, 1f) * ClockTime.FULL_TURN
+    }
+
+    /**
+     * Renkaan väri [index] leikattuna maalattuun osaan, joka alkaa kahdestatoista ja jatkuu
+     * myötäpäivään [revealDeg] astetta. Palauttaa näkyvät palat (alkukulma, pituus) asteina
+     * kahdestatoista; kahdentoista kohdan väri voi jakautua kahteen palaan.
+     */
+    fun ringPieces(
+        index: Int,
+        revealDeg: Float,
+    ): List<Pair<Float, Float>> {
+        val start = index * RING_PART_DEG - RING_PART_DEG / 2
+        return listOf(start, start + ClockTime.FULL_TURN).mapNotNull { a ->
+            val from = max(a, 0f)
+            val to = min(a + RING_PART_DEG, revealDeg)
+            if (to > from) from to (to - from) else null
+        }
+    }
 
     /** Piste kellotaululla: säde ja kulma (0 = ylös, myötäpäivään). */
     fun point(

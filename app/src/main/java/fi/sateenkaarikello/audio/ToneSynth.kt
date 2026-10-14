@@ -9,7 +9,7 @@ import kotlin.math.ln
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-enum class Sound { OK, BAD, WIN, POP }
+enum class Sound { OK, BAD, WIN, POP, TICK }
 
 /** Yksi sävel: taajuus, alkuhetki ja kesto sekunteina, aaltomuoto ja voimakkuus (web: tone()). */
 internal data class Tone(
@@ -35,9 +35,15 @@ internal object ToneSynth {
     fun tones(sound: Sound): List<Tone> =
         when (sound) {
             Sound.OK -> listOf(Tone(659.0, 0.0, 0.12), Tone(784.0, 0.1, 0.12), Tone(1047.0, 0.2, 0.28))
+
             Sound.BAD -> listOf(Tone(330.0, 0.0, 0.16, false, 0.12), Tone(262.0, 0.15, 0.26, false, 0.12))
+
             Sound.WIN -> listOf(523.0, 659.0, 784.0, 1047.0, 1319.0).mapIndexed { i, f -> Tone(f, i * 0.11, 0.32) }
+
             Sound.POP -> listOf(Tone(880.0, 0.0, 0.08, false, 0.08))
+
+            // Aloitusnäkymä: lyhyt tik ja matalampi tak, kun viisarit pysähtyvät.
+            Sound.TICK -> listOf(Tone(1760.0, 0.0, 0.05, false, 0.1), Tone(1320.0, 0.14, 0.06, false, 0.1))
         }
 
     /** Eksponentiaalinen nousu ja lasku kuten exponentialRampToValueAtTime. */

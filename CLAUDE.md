@@ -35,6 +35,7 @@ Natiivi Android-sovellus (Kotlin, Jetpack Compose, ei WebViewiä), joka opettaa 
   - `doll/`: `Doll` (Canvas 200×340, webin SVG-polut, asento `pose`-lambdana piirtovaiheessa), `DollParts`, `DollScreen` (vaatekaappi), `LivelyDoll` (räpyttää ja keinuu; tulosnäkymässä pyörähtää uuteen asuun ja hyppää vilkuttaen) ja `DollMotion.kt` (liikkeet puhtaina ajan funktioina, testattu).
   - `AppViewModel.kt`, `Texts.kt` (domainin tekstit, vinkit ja nimet resursseista), `Motion.kt` (animaatiot pois -asetus).
   - Näkymät: `home/`, `freeclock/`, `levels/`, `game/` (peli ja tulos), `challenge/`, `ask/`, `lesson/` (`LessonCatalog` = 9 oppituntia datana, `LessonViewModel` ajaa animaatiot korutiinina).
+  - `intro/`: aloitusnäkymä jokaisella käynnistyksellä (`IntroOverlay` kotinäkymän päällä `SateenkaariApp`:ssa, `rememberSaveable`, joten ei palaa näkymän uudelleenluonnissa). Kello pyörähtää tunnin verran laitteen kellonaikaan ja minuuttiviisari maalaa sateenkaarirenkaan (`ClockFace(paintRingFrom)`), tik (`Sound.TICK`, kun kellon animaatio päättyy: `ClockFace(onSettle)`) ja tähtisuihku, nukke omassa asussaan hyppii vilkuttaen, otsikko kirjain kerrallaan ja tervehdys (`FinnishTime.greeting`). Napautus ohittaa. Intron ajan kotinäkymä on piilossa saavutettavuuspalveluilta ja näppäimistön kohdistukselta (`coveredByIntro`). Aikajana `IntroTimeline.kt`:ssä puhtaina funktioina (testattu); järjestelmän splash (API 31+) näyttää pelkän kuvakkeen samalla taustavärillä.
 
 ## Arkkitehtuurin periaatteet
 
@@ -62,4 +63,5 @@ Natiivi Android-sovellus (Kotlin, Jetpack Compose, ei WebViewiä), joka opettaa 
 ## Animaatiot
 
 - Jatkuvat lepoliikkeet käyttävät `withInfiniteAnimationFrameNanos`-funktiota, jotta Compose-testit pääsevät lepotilaan. Asento luetaan vasta piirrettäessä, joten liike ei koosta näkymää uudelleen joka ruudulla.
-- Kun järjestelmän animaatiot on poistettu (`rememberReduceMotion`), konfetti, tähden lento ja nuken liike jätetään pois: pallo täyttyy heti, ja uusi asu näkyy heti.
+- Kun järjestelmän animaatiot on poistettu (`rememberReduceMotion`), konfetti, tähden lento ja nuken liike jätetään pois: pallo täyttyy heti, ja uusi asu näkyy heti. Intro näyttää silloin valmiin kuvan 1,2 sekuntia ilman liikettä.
+- Koko nukkea ei rajata kuvan reunoihin, jotta vilkuttava käsi näkyy; vaatekaapin osakuvat rajataan.
