@@ -1,7 +1,7 @@
 # Versiot tarkistettu 2026-10-13 Google Mavenista ja Maven Centralista.
 # AGP 9.3.3 eikä 9.4.x: KGP 2.4.21 on virallisesti testattu AGP 9.3.1:een ja Gradle 9.7.0:aan asti.
 [versions]
-agp = "9.3.3"
+agp = "9.4.1"
 kotlin = "2.4.21"
 composeBom = "2026.09.00"
 activityCompose = "1.13.0"
